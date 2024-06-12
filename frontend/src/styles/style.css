@@ -1,0 +1,107 @@
+/* App.css */
+
+/* Reset some basic styles */
+body, html, ul {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+}
+
+/* Flexbox for the main app layout */
+.App {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+/* Styling for the header */
+.App-header {
+  background-color: #282c34;
+  min-height: 10vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+/* Styling for the logo */
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+/* Styling for the main content */
+.App-main {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+}
+
+/* Specific styles for the sidebar and main content area can be added in Timeline.css */
+
+/* Add any additional global styles as needed */
+/* styles.css */
+.timeline {
+  border-left: 2px solid #ccc;
+  margin-left: 20px;
+  padding-left: 20px;
+}
+
+.timeline-title {
+  margin-bottom: 20px;
+  font-size: 1.5rem;
+}
+
+.timeline-event {
+  margin-bottom: 20px;
+}
+
+.timeline-event-date {
+  font-weight: bold;
+}
+
+.timeline-event-description {
+  margin-top: 5px;
+}
+
+.add-event-button {
+  margin-top: 20px;
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.add-event-button:hover {
+  background-color: #0056b3;
+}
+
+/* HomePage.css */
+.homepage {
+  /* Apply background color or background image */
+  background-color: #f0f0f0;
+  padding: 50px;
+}
+
+.welcome-section {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.example-event-card {
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  margin-bottom: 30px;
+}
+

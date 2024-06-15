@@ -1,21 +1,28 @@
 // App.js
 import React from 'react';
-import Timeline from './Timeline';
-import '../styles/style.css';
-
+import '../styles/style.css'; // Import your custom styles
+import HomePage from './HomePage';
+import Board from './Board';
 
 function App() {
-  const events = [
-    { date: 'June 1, 2024', description: 'Started the project' },
-    { date: 'June 5, 2024', description: 'Added basic frontend components' },
-    { date: 'June 10, 2024', description: 'Integrated vertical timeline' },
-    // More events...
-  ];
-
   return (
     <div className="App">
-      <h1>Project Timeline</h1>
-      <Timeline events={events} />
+      <header className="navbar">
+        <nav>
+          <div className="nav-wrapper">
+            <a href="#!" className="brand-logo">Collaborative Project Management Tool</a>
+          </div>
+        </nav>
+      </header>
+      <main className="container">
+        <HomePage />
+        <Board />
+      </main>
+      <footer className="footer">
+        <div className="container">
+          <p>Created by Andrew Vu</p>
+        </div>
+      </footer>
     </div>
   );
 }

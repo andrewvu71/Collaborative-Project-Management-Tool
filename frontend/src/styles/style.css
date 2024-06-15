@@ -1,107 +1,73 @@
-/* App.css */
+/* style.css */
 
-/* Reset some basic styles */
-body, html, ul {
+body {
+  font-family: 'Roboto', sans-serif; /* Example font for Materialize */
   margin: 0;
   padding: 0;
-  font-family: Arial, sans-serif;
 }
 
-/* Flexbox for the main app layout */
-.App {
-  display: flex;
-  flex-direction: column;
-  height: 100vh;
+.navbar {
+  background-color: #1976d2; /* Materialize primary color */
 }
 
-/* Styling for the header */
-.App-header {
-  background-color: #282c34;
-  min-height: 10vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-/* Styling for the logo */
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-/* Styling for the main content */
-.App-main {
-  display: flex;
-  flex: 1;
-  overflow: hidden;
-}
-
-/* Specific styles for the sidebar and main content area can be added in Timeline.css */
-
-/* Add any additional global styles as needed */
-/* styles.css */
-.timeline {
-  border-left: 2px solid #ccc;
-  margin-left: 20px;
-  padding-left: 20px;
-}
-
-.timeline-title {
-  margin-bottom: 20px;
+.navbar .brand-logo {
   font-size: 1.5rem;
+  padding: 0 1rem;
+}
+
+.container {
+  margin-top: 2rem;
+}
+
+.timeline {
+  background-color: #fff;
+  padding: 1rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin-bottom: 2rem;
+}
+
+.add-event-button {
+  background-color: #1976d2; /* Materialize primary color */
+  color: #fff;
 }
 
 .timeline-event {
-  margin-bottom: 20px;
+  background-color: #f0f0f0; /* Light background for events */
+  border: 1px solid #e0e0e0;
+  border-radius: 4px;
+  padding: 1rem;
+  margin-bottom: 1rem;
 }
 
 .timeline-event-date {
   font-weight: bold;
+  margin-bottom: 0.5rem;
 }
 
 .timeline-event-description {
-  margin-top: 5px;
+  color: #555;
 }
 
-.add-event-button {
-  margin-top: 20px;
-  padding: 10px 20px;
-  background-color: #007bff;
-  color: #fff;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-.add-event-button:hover {
-  background-color: #0056b3;
-}
-
-/* HomePage.css */
-.homepage {
-  /* Apply background color or background image */
-  background-color: #f0f0f0;
-  padding: 50px;
-}
-
-.welcome-section {
-  text-align: center;
-  margin-bottom: 30px;
-}
-
-.example-event-card {
-  background-color: #fff;
+.timeline-cards {
+  padding: 1rem;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  padding: 20px;
-  margin-bottom: 30px;
+  height: calc(100vh - 300px);
+  overflow-y: auto;
 }
 
+.card {
+  background-color: #fff;
+  padding: 1rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin-bottom: 1rem;
+}
+
+.footer {
+  background-color: #f59bc0; /* Materialize primary color */
+  color: #fff;
+  padding: 1rem;
+  text-align: center;
+}

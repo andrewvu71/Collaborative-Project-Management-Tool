@@ -1,73 +1,47 @@
-/* style.css */
-
+/* src/styles/style.css */
 body {
-  font-family: 'Roboto', sans-serif; /* Example font for Materialize */
+  font-family: 'Roboto', sans-serif;
+  background-color: #f8f9fa;
   margin: 0;
   padding: 0;
+  color: #343a40;
 }
 
-.navbar {
-  background-color: #1976d2; /* Materialize primary color */
-}
-
-.navbar .brand-logo {
-  font-size: 1.5rem;
-  padding: 0 1rem;
-}
-
-.container {
-  margin-top: 2rem;
-}
-
-.timeline {
-  background-color: #fff;
-  padding: 1rem;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  margin-bottom: 2rem;
-}
-
-.add-event-button {
-  background-color: #1976d2; /* Materialize primary color */
-  color: #fff;
-}
-
-.timeline-event {
-  background-color: #f0f0f0; /* Light background for events */
-  border: 1px solid #e0e0e0;
-  border-radius: 4px;
-  padding: 1rem;
-  margin-bottom: 1rem;
-}
-
-.timeline-event-date {
-  font-weight: bold;
-  margin-bottom: 0.5rem;
-}
-
-.timeline-event-description {
-  color: #555;
-}
-
-.timeline-cards {
-  padding: 1rem;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  height: calc(100vh - 300px);
-  overflow-y: auto;
-}
-
-.card {
-  background-color: #fff;
-  padding: 1rem;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  margin-bottom: 1rem;
-}
-
-.footer {
-  background-color: #f59bc0; /* Materialize primary color */
-  color: #fff;
-  padding: 1rem;
+.App {
   text-align: center;
+  padding: 20px;
+}
+
+.header {
+  background-color: #007bff;
+  padding: 20px;
+  color: white;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  margin-bottom: 20px;
+}
+
+.header h1 {
+  font-size: 24px;
+  margin: 0;
+  font-weight: 500;
+}
+
+.button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  border-radius: 4px;
+  font-size: 14px;
+  transition: background-color 0.3s ease;
+}
+
+.button:hover {
+  background-color: #0056b3;
+}
+
+.button:active {
+  background-color: #004085;
 }

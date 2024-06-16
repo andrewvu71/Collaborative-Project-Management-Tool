@@ -1,28 +1,17 @@
-// App.js
+// src/components/App.js
 import React from 'react';
-import '../styles/style.css'; // Import your custom styles
-import HomePage from './HomePage';
 import Board from './Board';
+import Greeting from './Greeting';
+import '../styles/style.css';
 
 function App() {
   return (
     <div className="App">
-      <header className="navbar">
-        <nav>
-          <div className="nav-wrapper">
-            <a href="#!" className="brand-logo">Collaborative Project Management Tool</a>
-          </div>
-        </nav>
+      <header className="header">
+        <h1>Collaborative Project Management Tool</h1>
       </header>
-      <main className="container">
-        <HomePage />
-        <Board />
-      </main>
-      <footer className="footer">
-        <div className="container">
-          <p>Created by Andrew Vu</p>
-        </div>
-      </footer>
+      <Greeting />
+      <Board />
     </div>
   );
 }

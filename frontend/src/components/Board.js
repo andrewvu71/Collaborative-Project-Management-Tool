@@ -1,113 +1,96 @@
-// Board.js
+// src/components/Board.js
 import React, { useState } from 'react';
-import { SortableContext, arrayMove, useSortable } from '@dnd-kit/sortable';
-import { CSS } from '@dnd-kit/utilities';
-import Timeline from './Timeline';
-import '../styles/style.css'; // Ensure your CSS file is imported
+import Column from './Column';
+import EventForm from './EventForm';
+import { DndContext } from '@dnd-kit/core';
+import { arrayMove, rectSortingStrategy } from '@dnd-kit/sortable';
+import { restrictToVerticalAxis } from '@dnd-kit/modifiers';
+import '../styles/board.css';
 
-function Board() {
-  const [events, setEvents] = useState([]);
-  const [todos, setTodos] = useState([]);
-  const [inProgress, setInProgress] = useState([]);
-  const [completed, setCompleted] = useState([]);
+const initialColumns = {
+  todos: { id: 'todos', title: 'To Do', items: [] },
+  inProgress: { id: 'inProgress', title: 'In Progress', items: [] },
+  completed: { id: 'completed', title: 'Completed', items: [] },
+};
 
-  const addEvent = (event) => {
-    const newEvent = { id: Date.now(), ...event };
-    setEvents([...events, newEvent]);
+const Board = () => {
+  const [columns, setColumns] = useState(initialColumns);
+
+  const addCard = (card) => {
+    setColumns((prevColumns) => ({
+      ...prevColumns,
+      todos: {
+        ...prevColumns.todos,
+        items: [...prevColumns.todos.items, card],
+      },
+    }));
   };
 
-  const handleDragEnd = (event) => {
-    const { active, over } = event;
-    if (active.id !== over.id) {
-      const updatedEvents = arrayMove(events, active.id, over.id);
-      setEvents(updatedEvents);
+  const handleDragEnd = ({ active, over }) => {
+    if (!over) return;
+
+    const activeColumnId = findColumnId(active.id);
+    const overColumnId = findColumnId(over.id);
+
+    if (activeColumnId === overColumnId) {
+      // Reorder items within the same column
+      setColumns((prevColumns) => ({
+        ...prevColumns,
+        [activeColumnId]: {
+          ...prevColumns[activeColumnId],
+          items: arrayMove(
+            prevColumns[activeColumnId].items,
+            findIndex(activeColumnId, active.id),
+            findIndex(activeColumnId, over.id)
+          ),
+        },
+      }));
+    } else {
+      // Move item to another column
+      const activeIndex = findIndex(activeColumnId, active.id);
+      const overIndex = findIndex(overColumnId, over.id);
+
+      if (activeIndex !== -1 && overIndex !== -1) {
+        setColumns((prevColumns) => {
+          const activeItems = [...prevColumns[activeColumnId].items];
+          const overItems = [...prevColumns[overColumnId].items];
+          const [movedItem] = activeItems.splice(activeIndex, 1);
+
+          overItems.splice(overIndex, 0, movedItem);
+
+          return {
+            ...prevColumns,
+            [activeColumnId]: { ...prevColumns[activeColumnId], items: activeItems },
+            [overColumnId]: { ...prevColumns[overColumnId], items: overItems },
+          };
+        });
+      }
     }
   };
 
-  const DraggableEvent = ({ event }) => {
-    const { attributes, listeners, setNodeRef, transform, transition } = useSortable({ id: event.id });
-
-    const style = {
-      transform: CSS.Transform.toString(transform),
-      transition,
-      zIndex: active ? '1' : 'auto',
-    };
-
-    return (
-      <div ref={setNodeRef} style={style} {...attributes} {...listeners}>
-        {event.description}
-      </div>
+  const findColumnId = (itemId) => {
+    return Object.keys(columns).find((key) =>
+      columns[key].items.some((item) => item.id === itemId)
     );
   };
 
+  const findIndex = (columnId, itemId) =>
+    columns[columnId]?.items.findIndex((item) => item.id === itemId);
+
   return (
-    <div className="board">
-      <div className="timeline-container">
-        <h2>Timeline</h2>
-        <SortableContext items={events} strategy={verticalListSortingStrategy}>
-          <div>
-            {events.map((event) => (
-              <DraggableEvent key={event.id} event={event} />
-            ))}
-          </div>
-        </SortableContext>
-        <Timeline events={events} addEvent={addEvent} />
-      </div>
-
-      <div className="kanban-container">
-        <div className="kanban-column">
-          <h2>To Do</h2>
-          <SortableContext items={todos} strategy={verticalListSortingStrategy}>
-            <div>
-              {todos.map((event) => (
-                <DraggableEvent key={event.id} event={event} />
-              ))}
-            </div>
-          </SortableContext>
+    <DndContext onDragEnd={handleDragEnd} modifiers={[restrictToVerticalAxis]}>
+      <div className="board">
+        <div className="event-form-section">
+          <EventForm onAddCard={addCard} />
         </div>
-
-        <div className="kanban-column">
-          <h2>In Progress</h2>
-          <SortableContext items={inProgress} strategy={verticalListSortingStrategy}>
-            <div>
-              {inProgress.map((event) => (
-                <DraggableEvent key={event.id} event={event} />
-              ))}
-            </div>
-          </SortableContext>
-        </div>
-
-        <div className="kanban-column">
-          <h2>Completed</h2>
-          <SortableContext items={completed} strategy={verticalListSortingStrategy}>
-            <div>
-              {completed.map((event) => (
-                <DraggableEvent key={event.id} event={event} />
-              ))}
-            </div>
-          </SortableContext>
+        <div className="columns">
+          {Object.keys(columns).map((key) => (
+            <Column key={key} column={columns[key]} columnId={key} />
+          ))}
         </div>
       </div>
-    </div>
+    </DndContext>
   );
-}
-
-const verticalListSortingStrategy = (layoutRects, sortableRect, dragRect) => {
-  const { translateY } = dragRect.transform;
-
-  let activeIndex = 0;
-  let index = layoutRects.findIndex(({ id }) => id === dragRect.id);
-
-  if (index !== -1) {
-    activeIndex = index;
-  }
-
-  return layoutRects.map(({ height }, index) => ({
-    offset: {
-      x: 0,
-      y: index * height + translateY,
-    },
-  }));
 };
 
 export default Board;

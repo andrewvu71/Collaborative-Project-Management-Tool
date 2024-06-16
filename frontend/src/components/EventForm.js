@@ -1,61 +1,40 @@
-// EventForm.js
-import React, { useState, useEffect } from 'react';
-import M from 'materialize-css'; // Import Materialize CSS
-import 'materialize-css/dist/css/materialize.min.css'; // Import Materialize CSS
+// src/components/EventForm.js
+import React, { useState } from 'react';
+import '../styles/eventform.css';
 
-function EventForm({ addEvent }) {
-  const [formData, setFormData] = useState({
-    date: '',
-    description: ''
-  });
-
-  // Initialize Materialize Date Picker on component mount
-  useEffect(() => {
-    const datePicker = document.querySelector('.datepicker');
-    M.Datepicker.init(datePicker, {
-      onSelect: handleDateChange
-    });
-  }, []);
-
-  const handleDateChange = (selectedDate) => {
-    const formattedDate = new Date(selectedDate).toLocaleDateString(); // Format the date
-    setFormData({ ...formData, date: formattedDate });
-  };
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
-  };
+const EventForm = ({ onAddCard }) => {
+  const [title, setTitle] = useState('');
+  const [description, setDescription] = useState('');
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    addEvent(formData);
-    setFormData({ date: '', description: '' });
+    if (title.trim() && description.trim()) {
+      const newCard = { id: Date.now().toString(), title, description };
+      onAddCard(newCard);
+      setTitle('');
+      setDescription('');
+    }
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <label>Date:</label>
+    <form className="event-form" onSubmit={handleSubmit}>
+      <h2>Add New Event</h2>
       <input
         type="text"
-        className="datepicker"
-        name="date"
-        value={formData.date}
-        onChange={handleChange}
+        placeholder="Title"
+        value={title}
+        onChange={(e) => setTitle(e.target.value)}
         required
       />
-      <label>Description:</label>
       <textarea
-        name="description"
-        value={formData.description}
-        onChange={handleChange}
+        placeholder="Description"
+        value={description}
+        onChange={(e) => setDescription(e.target.value)}
         required
-      ></textarea>
-      <button type="submit" className="waves-effect waves-light btn">
-        Add Event
-      </button>
+      />
+      <button className="button" type="submit">Add Event</button>
     </form>
   );
-}
+};
 
 export default EventForm;

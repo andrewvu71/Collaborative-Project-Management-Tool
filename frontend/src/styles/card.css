@@ -1,7 +1,6 @@
-/* src/styles/card.css */
 .card {
-  background-color: #ffffff; /* White */
-  border: 1px solid #98d7c2; /* Mint green */
+  background-color: #ffffff; 
+  border: 1px solid #98d7c2; 
   border-radius: 5px;
   padding: 15px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -19,7 +18,7 @@
 .card-title {
   font-weight: bold;
   margin-bottom: 10px;
-  color: #98d7c2; /* Mint green */
+  color: #98d7c2; 
 }
 
 .card-description {

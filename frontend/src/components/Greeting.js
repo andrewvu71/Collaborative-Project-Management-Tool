@@ -1,4 +1,3 @@
-// src/components/Greeting.js
 import React from 'react';
 import '../styles/greeting.css';
 

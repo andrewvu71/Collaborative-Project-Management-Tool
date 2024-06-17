@@ -1,4 +1,3 @@
-// src/components/Timeline.js
 import React from 'react';
 import '../styles/timeline.css';
 

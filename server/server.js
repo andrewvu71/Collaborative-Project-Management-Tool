@@ -8,13 +8,11 @@ const PORT = process.env.PORT || 5000;
 app.use(cors());
 app.use(express.json());
 
-// Connect to MongoDB
 mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/kanban', {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
 
-// Define a simple schema and model
 const eventSchema = new mongoose.Schema({
   title: String,
   description: String,

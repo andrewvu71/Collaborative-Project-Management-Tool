@@ -1,4 +1,3 @@
-// src/components/SortableCard.js
 import React, { useRef } from 'react';
 import { useDrag, useDrop } from 'react-dnd';
 import Card from './Card';

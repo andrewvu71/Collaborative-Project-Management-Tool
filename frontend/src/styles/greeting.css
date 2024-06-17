@@ -1,6 +1,5 @@
-/* src/styles/greeting.css */
 .greeting {
-  background-color: #fff0f5; /* Light pink */
+  background-color: #fff0f5;
   border-radius: 10px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   padding: 20px;
@@ -9,7 +8,7 @@
 }
 
 .greeting h2 {
-  color: #98d7c2; /* Mint green */
+  color: #98d7c2; 
   margin: 0 0 10px 0;
 }
 

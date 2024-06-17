@@ -1,4 +1,3 @@
-// src/components/Column.js
 import React from 'react';
 import { useDrop } from 'react-dnd';
 import Card from './Card';
@@ -21,7 +20,7 @@ const Column = ({ column, moveCard }) => {
     drop: (item) => {
       if (item.from !== column.id) {
         moveCard(item.id, item.from, column.id);
-        item.from = column.id; // Update the column id after moving the card
+        item.from = column.id; 
       }
     },
   });

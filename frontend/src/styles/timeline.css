@@ -1,23 +1,40 @@
 /* src/styles/timeline.css */
-
 .timeline {
-  display: flex;
-  flex-direction: column;
-  margin: 20px;
+  margin-top: 20px;
+  background-color: #ffffff; /* White */
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-.timeline-title {
-  font-size: 1.5rem;
-  font-weight: bold;
-  color: #6200ea;
-  margin-bottom: 10px;
+.timeline h2 {
+  text-align: center;
+  color: #98d7c2; /* Mint green */
+  margin-bottom: 20px;
+}
+
+.timeline-content {
+  display: flex;
+  overflow-x: auto;
+  gap: 10px;
 }
 
 .timeline-event {
-  margin: 10px 0;
+  background-color: #ffe4e1; /* Light pink */
+  border-radius: 10px;
   padding: 10px;
-  border-left: 4px solid #6200ea;
-  background-color: #fff;
-  border-radius: 4px;
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  min-width: 150px;
+  text-align: center;
+}
+
+.timeline-event-date {
+  font-size: 0.9em;
+  color: #666;
+}
+
+.timeline-event-title {
+  font-size: 1.1em;
+  font-weight: bold;
+  color: #333;
 }

@@ -1,10 +1,9 @@
 // src/components/Board.js
 import React, { useState } from 'react';
+import { DndProvider } from 'react-dnd';
+import { HTML5Backend } from 'react-dnd-html5-backend';
 import Column from './Column';
 import EventForm from './EventForm';
-import { DndContext } from '@dnd-kit/core';
-import { arrayMove, rectSortingStrategy } from '@dnd-kit/sortable';
-import { restrictToVerticalAxis } from '@dnd-kit/modifiers';
 import '../styles/board.css';
 
 const initialColumns = {
@@ -13,7 +12,7 @@ const initialColumns = {
   completed: { id: 'completed', title: 'Completed', items: [] },
 };
 
-const Board = () => {
+const Board = ({ addEvent }) => {
   const [columns, setColumns] = useState(initialColumns);
 
   const addCard = (card) => {
@@ -24,72 +23,46 @@ const Board = () => {
         items: [...prevColumns.todos.items, card],
       },
     }));
+    addEvent(card);
   };
 
-  const handleDragEnd = ({ active, over }) => {
-    if (!over) return;
+  const moveCard = (cardId, fromColumnId, toColumnId, hoverIndex) => {
+    const fromItems = [...columns[fromColumnId].items];
+    const toItems = fromColumnId === toColumnId ? fromItems : [...columns[toColumnId].items];
+    const fromIndex = fromItems.findIndex(item => item.id === cardId);
 
-    const activeColumnId = findColumnId(active.id);
-    const overColumnId = findColumnId(over.id);
-
-    if (activeColumnId === overColumnId) {
-      // Reorder items within the same column
-      setColumns((prevColumns) => ({
-        ...prevColumns,
-        [activeColumnId]: {
-          ...prevColumns[activeColumnId],
-          items: arrayMove(
-            prevColumns[activeColumnId].items,
-            findIndex(activeColumnId, active.id),
-            findIndex(activeColumnId, over.id)
-          ),
-        },
-      }));
-    } else {
-      // Move item to another column
-      const activeIndex = findIndex(activeColumnId, active.id);
-      const overIndex = findIndex(overColumnId, over.id);
-
-      if (activeIndex !== -1 && overIndex !== -1) {
-        setColumns((prevColumns) => {
-          const activeItems = [...prevColumns[activeColumnId].items];
-          const overItems = [...prevColumns[overColumnId].items];
-          const [movedItem] = activeItems.splice(activeIndex, 1);
-
-          overItems.splice(overIndex, 0, movedItem);
-
-          return {
-            ...prevColumns,
-            [activeColumnId]: { ...prevColumns[activeColumnId], items: activeItems },
-            [overColumnId]: { ...prevColumns[overColumnId], items: overItems },
-          };
-        });
-      }
+    if (fromIndex === -1) {
+      console.error(`Card with id ${cardId} not found in column ${fromColumnId}`);
+      return;
     }
-  };
 
-  const findColumnId = (itemId) => {
-    return Object.keys(columns).find((key) =>
-      columns[key].items.some((item) => item.id === itemId)
-    );
-  };
+    const [movedCard] = fromItems.splice(fromIndex, 1);
+    toItems.splice(hoverIndex, 0, movedCard);
 
-  const findIndex = (columnId, itemId) =>
-    columns[columnId]?.items.findIndex((item) => item.id === itemId);
+    setColumns((prevColumns) => ({
+      ...prevColumns,
+      [fromColumnId]: { ...prevColumns[fromColumnId], items: fromItems },
+      [toColumnId]: { ...prevColumns[toColumnId], items: toItems },
+    }));
+  };
 
   return (
-    <DndContext onDragEnd={handleDragEnd} modifiers={[restrictToVerticalAxis]}>
+    <DndProvider backend={HTML5Backend}>
       <div className="board">
         <div className="event-form-section">
           <EventForm onAddCard={addCard} />
         </div>
         <div className="columns">
           {Object.keys(columns).map((key) => (
-            <Column key={key} column={columns[key]} columnId={key} />
+            <Column
+              key={key}
+              column={columns[key]}
+              moveCard={moveCard}
+            />
           ))}
         </div>
       </div>
-    </DndContext>
+    </DndProvider>
   );
 };
 
